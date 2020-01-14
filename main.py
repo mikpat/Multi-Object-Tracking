@@ -130,7 +130,6 @@ class Tracker:
                 obj_detected_name = max(IoU_scores, key=IoU_scores.get)
                 if self.corr_threshold < float(IoU_scores[obj_detected_name]):
                     self.tracked_objects[obj_detected_name].replace_measurement(img_name, box, mask[box_name])
-                    #self.tracked_objects[obj_detected_name].add_measurement(img_name, box, mask[box_name])
                     self.trackers[obj_detected_name].init(img, tuple(box))
                 else:
                     new_idx = len(self.tracked_objects)
@@ -148,7 +147,7 @@ class Tracker:
             bbox = objs[obj_name].get_last_box()
             p1 = (int(bbox[0]), int(bbox[1]))
             p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
-            cv2.putText(last_img, "Name: "+ str(obj_name), (int(bbox[0]), int(bbox[1])+int(bbox[3])+20), \
+            cv2.putText(last_img, "Name: " + str(obj_name), (int(bbox[0]), int(bbox[1])+int(bbox[3])+20),
                         cv2.FONT_HERSHEY_DUPLEX, 0.6, objs[obj_name].get_color())
             cv2.rectangle(last_img, p1, p2, objs[obj_name].get_color(), 5, 1)
 
@@ -172,7 +171,7 @@ class Tracker:
             bbox = (self.tracked_objects[obj_name].get_all_boxes())[curr_img_position]
             p1 = (int(bbox[0]), int(bbox[1]))
             p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
-            cv2.putText(output, "Name: "+ str(obj_name), (int(bbox[0])-40, int(bbox[1])+int(bbox[3])+40), \
+            cv2.putText(output, "Name: " + str(obj_name), (int(bbox[0])-40, int(bbox[1])+int(bbox[3])+40),
                         cv2.FONT_HERSHEY_COMPLEX, 1.5, self.tracked_objects[obj_name].get_color(), 2)
             cv2.rectangle(output, p1, p2, self.tracked_objects[obj_name].get_color(), 5, 1)
 
@@ -218,7 +217,7 @@ class Tracker:
         ax.set_xticks(x)
         ax.legend()
         ax.set_ylabel('IoU score')
-        ax.set_title('IoU scores of each tracked object in an image sequence 0...'+str(len(self.imgs_names)-1)\
+        ax.set_title('IoU scores of each tracked object in an image sequence 0...'+str(len(self.imgs_names)-1)
                      +' with 2 trees tracked')
 
         plt.tight_layout()
@@ -287,7 +286,7 @@ if __name__ == "__main__":
 
         img_with_boxes = tracker.draw_last_tracking_frame()
         cv2.imshow("Current frame", img_with_boxes)
-        #cv2.imwrite("X:\\final sem\\Tracking course\\Data2\\seq3_tracking\\"+str(i)+".jpg", img_with_boxes)
+        #cv2.imwrite(os.path.abspath(os.getcwd()) + "\\Data\\seq3_tracking\\"+str(i)+".jpg", img_with_boxes)
 
         # Exit if ESC pressed
         k = cv2.waitKey(1000) & 0xff
